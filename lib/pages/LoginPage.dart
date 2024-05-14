@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:video_conference_app/pages/QstPage.dart';
 import 'RegisterPage.dart'; // Importer la classe RegisterPage
 
 class LoginPage extends StatelessWidget {
@@ -163,11 +166,30 @@ class LoginPage extends StatelessWidget {
   }
 
   void _handleLogin(BuildContext context) {
+    final HashMap<String, List<String>> selectedElements =
+        HashMap<String, List<String>>();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-
     if (email.isNotEmpty && password.isNotEmpty) {
-      Navigator.pushReplacementNamed(context, '/home');
+      // hna a chabab traitement dial wach User kyn fl bdd wla la ya3ni wach mregistrer
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => QstPage(
+            title: "Custom Title",
+            question: "What's your custom question?",
+            initialValue: 10,
+            questionList: [
+              "Question E",
+              "Question F",
+              "Question G",
+              "Question H"
+            ],
+            selectedElements: selectedElements,
+            buttonText: "Next",
+          ),
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
