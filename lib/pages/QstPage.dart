@@ -1,8 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:video_conference_app/Services/FireStore.dart'; // Importer firebase_core.dart
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:video_conference_app/Services/FireStore.dart'; // Importer firebase_core.dart
 // Importer le service Firestore si nécessaire
 // import 'package:video_conference_app/Services/FireStore.dart';
 
@@ -42,8 +42,8 @@ class _QstPageState extends State<QstPage> {
     );
   }
 
-  final FireStoreService fireStoreService =
-      FireStoreService(); // Instancier le service Firestore si nécessaire
+  // final FireStoreService fireStoreService =
+  //     FireStoreService(); // Instancier le service Firestore si nécessaire
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +109,11 @@ class _QstPageState extends State<QstPage> {
             padding: EdgeInsets.only(right: 7),
             child: ElevatedButton(
               onPressed: () {
-                String title = widget.title;
-                String question = widget.selectedElements.keys.first;
                 navigateToNextPage();
+                // String title = widget.title;
+                // String question = widget.selectedElements.keys.first;
                 // Appel de la méthode Firestore pour ajouter la question et les éléments sélectionnés
-                fireStoreService.addQuestion(title, question);
+                // fireStoreService.addQuestion(title, question);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,

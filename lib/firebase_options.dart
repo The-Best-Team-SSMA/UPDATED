@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'ssmachat.firebaseapp.com',
     storageBucket: 'ssmachat.appspot.com',
   );
+
 }
