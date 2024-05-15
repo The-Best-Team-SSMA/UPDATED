@@ -1,7 +1,7 @@
 import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:video_conference_app/pages/ChattingPage.dart';
 
 class QstPage extends StatefulWidget {
   final String title;
@@ -156,9 +156,37 @@ class _QstPageState extends State<QstPage> {
   }
 
   void navigateToNextPage() {
+    // Création du HashMap pour stocker les éléments sélectionnés
+    final HashMap<String, List<String>> selectedElements =
+        HashMap<String, List<String>>();
+    List<String> selectedQuestions = [];
+
+    // Parcours de la liste des questions pour récupérer les éléments sélectionnés
+    for (int i = 0; i < buttonStates.length; i++) {
+      if (buttonStates[i]) {
+        selectedQuestions.add(widget.questionList[i]);
+      }
+    }
+
+    // Ajout des éléments sélectionnés au HashMap
+    selectedElements[widget.title] = selectedQuestions;
+
+    // Affichage du HashMap dans le terminal
+    selectedElements.forEach((title, questions) {
+      print("Title: $title");
+      print("Questions: ${questions.join(", ")}");
+    });
+
+    // Ajout des données à la base de données Firestore
     CollectionReference questionsRef =
         FirebaseFirestore.instance.collection("questions");
+    questionsRef.add({
+      'title': widget.title,
+      'questions': selectedQuestions.join(
+          ", "), // Concaténation des questions en une chaîne de caractères
+    });
 
+    // Navigation vers la prochaine page
     if (widget.title == "Custom Title") {
       Navigator.pushReplacement(
         context,
@@ -174,7 +202,7 @@ class _QstPageState extends State<QstPage> {
               "Question D"
             ],
             buttonText: "Next",
-            selectedElements: widget.selectedElements,
+            selectedElements: selectedElements,
           ),
         ),
       );
@@ -193,16 +221,20 @@ class _QstPageState extends State<QstPage> {
               "Question H"
             ],
             buttonText: "Get started",
-            selectedElements: widget.selectedElements,
+            selectedElements: selectedElements,
           ),
         ),
       );
-    } else {
-      // Si c'est la dernière page, vous pouvez faire quelque chose ici
-      questionsRef.add({
-        'title': 'akram',
-        'question': 'anou',
-      });
+    } else if (widget.title == "Custom Title3") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ChattingPage(), // Naviguer vers la page ChattingPage
+        ),
+      );
     }
   }
 }
+
+// Créez la page ChattingPage avec les widgets appropriés

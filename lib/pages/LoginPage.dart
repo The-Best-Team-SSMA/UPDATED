@@ -1,10 +1,11 @@
 import 'dart:collection';
-
+import 'package:video_conference_app/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:video_conference_app/pages/QstPage.dart';
 import 'RegisterPage.dart'; // Importer la classe RegisterPage
 
 class LoginPage extends StatelessWidget {
+  final _auth = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -165,31 +166,37 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _handleLogin(BuildContext context) {
+  void _handleLogin(BuildContext context) async {
     final HashMap<String, List<String>> selectedElements =
         HashMap<String, List<String>>();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     if (email.isNotEmpty && password.isNotEmpty) {
-      // hna a chabab traitement dial wach User kyn fl bdd wla la ya3ni wach mregistrer
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => QstPage(
-            title: "Custom Title",
-            question: "What's your custom question?",
-            initialValue: 10,
-            questionList: [
-              "Question E",
-              "Question F",
-              "Question G",
-              "Question H"
-            ],
-            selectedElements: selectedElements,
-            buttonText: "Next",
+      final user = await _auth.loginUserWithEmailAndPassword(email, password);
+      if (user != null) {
+        print("User Logged in");
+        // hna a chabab traitement dial wach User kyn fl bdd wla la ya3ni wach mregistrer
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QstPage(
+              title: "Custom Title",
+              question: "What's your custom question?",
+              initialValue: 10,
+              questionList: [
+                "Question E",
+                "Question F",
+                "Question G",
+                "Question H"
+              ],
+              selectedElements: selectedElements,
+              buttonText: "Next",
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        print("User does not exist");
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

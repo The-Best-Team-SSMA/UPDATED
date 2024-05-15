@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:video_conference_app/firebase_auth_services.dart';
 import 'package:video_conference_app/pages/LoginPage.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final _auth = AuthService();
+
+  final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +97,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       TextField(
-                        controller: _emailController,
+                        controller: _fullNameController,
                         decoration: InputDecoration(
                           labelText: 'Full Name',
                           labelStyle: TextStyle(color: Colors.grey),
@@ -259,22 +276,29 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  void _handleRegister(BuildContext context) {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (email.isNotEmpty && password.isNotEmpty) {
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Veuillez remplir tous les champs.',
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Color.fromARGB(255, 20, 23, 39),
-        ),
-      );
+  void _handleRegister(BuildContext context) async {
+    final user = await _auth.createUserWithEmailAndPassword(
+        _emailController.text, _passwordController.text);
+    if (user != null) {
+      print("User Created Succesfully");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
     }
+    // final email = _emailController.text.trim();
+    // final password = _passwordController.text.trim();
+
+    // if (email.isNotEmpty && password.isNotEmpty) {
+    //   Navigator.pushReplacementNamed(context, '/home');
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(
+    //         'Veuillez remplir tous les champs.',
+    //         style: TextStyle(color: Colors.white),
+    //       ),
+    //       backgroundColor: Color.fromARGB(255, 20, 23, 39),
+    //     ),
+    //   );
+    // }
   }
 }
