@@ -1,10 +1,7 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:video_conference_app/Services/FireStore.dart'; // Importer firebase_core.dart
-// Importer le service Firestore si nécessaire
-// import 'package:video_conference_app/Services/FireStore.dart';
 
 class QstPage extends StatefulWidget {
   final String title;
@@ -41,9 +38,6 @@ class _QstPageState extends State<QstPage> {
       (index) => false,
     );
   }
-
-  // final FireStoreService fireStoreService =
-  //     FireStoreService(); // Instancier le service Firestore si nécessaire
 
   @override
   Widget build(BuildContext context) {
@@ -108,13 +102,7 @@ class _QstPageState extends State<QstPage> {
             alignment: Alignment.bottomRight,
             padding: EdgeInsets.only(right: 7),
             child: ElevatedButton(
-              onPressed: () {
-                navigateToNextPage();
-                // String title = widget.title;
-                // String question = widget.selectedElements.keys.first;
-                // Appel de la méthode Firestore pour ajouter la question et les éléments sélectionnés
-                // fireStoreService.addQuestion(title, question);
-              },
+              onPressed: navigateToNextPage,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
               ),
@@ -168,7 +156,9 @@ class _QstPageState extends State<QstPage> {
   }
 
   void navigateToNextPage() {
-    // Navigation vers la page suivante avec les paramètres appropriés
+    CollectionReference questionsRef =
+        FirebaseFirestore.instance.collection("questions");
+
     if (widget.title == "Custom Title") {
       Navigator.pushReplacement(
         context,
@@ -184,7 +174,6 @@ class _QstPageState extends State<QstPage> {
               "Question D"
             ],
             buttonText: "Next",
-            // Utilisez le même HashMap pour transmettre les éléments sélectionnés
             selectedElements: widget.selectedElements,
           ),
         ),
@@ -204,13 +193,16 @@ class _QstPageState extends State<QstPage> {
               "Question H"
             ],
             buttonText: "Get started",
-            // Utilisez le même HashMap pour transmettre les éléments sélectionnés
             selectedElements: widget.selectedElements,
           ),
         ),
       );
     } else {
-      // Si c'est la dernière page, vous pouvez faire quelque chose ici, comme afficher un message ou revenir à la première page.
+      // Si c'est la dernière page, vous pouvez faire quelque chose ici
+      questionsRef.add({
+        'title': 'akram',
+        'question': 'anou',
+      });
     }
   }
 }

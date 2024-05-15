@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "64446242342",
-    "project_id": "ssmachat",
-    "storage_bucket": "ssmachat.appspot.com"
+    "project_number": "451432254458",
+    "project_id": "ssmachat-24e3f",
+    "storage_bucket": "ssmachat-24e3f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64446242342:android:a32b3a6ab8ed90876fd0e7",
+        "mobilesdk_app_id": "1:451432254458:android:decb5c187b519a04313243",
         "android_client_info": {
           "package_name": "com.example.video_conference_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyArT4h_PGR6DiBLAJJ1v_7uKLOYiE5mUlI"
+          "current_key": "AIzaSyCTN3fN12TfFw1tiiYVHSOIUlv2NP5D9EU"
         }
       ],
       "services": {
