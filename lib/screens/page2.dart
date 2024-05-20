@@ -14,7 +14,7 @@ class _Page2State extends State<Page2> {
   @override
   void initState() {
     super.initState();
-    // Initialisation des champs de département
+    // Initialisation des champs de départementt
     for (int i = 0; i < departmentCount; i++) {
       departmentFields.add(buildDepartmentField(i + 1));
     }
