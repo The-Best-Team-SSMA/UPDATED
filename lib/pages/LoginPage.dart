@@ -2,7 +2,8 @@ import 'dart:collection';
 import 'package:video_conference_app/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:video_conference_app/pages/QstPage.dart';
-import 'RegisterPage.dart'; // Importer la classe RegisterPage
+import 'RegisterPage.dart'; 
+import 'package:video_conference_app/screens/login.dart';
 
 class LoginPage extends StatelessWidget {
   final _auth = AuthService();
@@ -179,19 +180,7 @@ class LoginPage extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => QstPage(
-              title: "Custom Title",
-              question: "What's your custom question?",
-              initialValue: 10,
-              questionList: [
-                "Question E",
-                "Question F",
-                "Question G",
-                "Question H"
-              ],
-              selectedElements: selectedElements,
-              buttonText: "Next",
-            ),
+            builder: (context) => LoginnPage(),
           ),
         );
       } else {
